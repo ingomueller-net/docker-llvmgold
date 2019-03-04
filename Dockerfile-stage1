@@ -12,21 +12,21 @@ RUN apt-get update && \
         xz-utils \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /opt/clang+llvm-6.0.1/ && \
-    cd /opt/clang+llvm-6.0.1/ && \
-    wget http://releases.llvm.org/6.0.1/clang+llvm-6.0.1-x86_64-linux-gnu-ubuntu-16.04.tar.xz -O - \
+RUN mkdir /opt/clang+llvm-7.0.1/ && \
+    cd /opt/clang+llvm-7.0.1/ && \
+    wget http://releases.llvm.org/7.0.1/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04.tar.xz -O - \
          | tar -x -I xz --strip-components=1 && \
     for file in bin/*; \
     do \
-        ln -s $PWD/$file /usr/bin/$(basename $file)-6.0; \
+        ln -s $PWD/$file /usr/bin/$(basename $file)-7.0; \
     done
 
 RUN cd /tmp/ && \
-    wget http://releases.llvm.org/6.0.1/llvm-6.0.1.src.tar.xz && \
-    tar -xf llvm-6.0.1.src.tar.xz && \
-    mkdir /tmp/llvm-6.0.1.src/build && \
-    cd /tmp/llvm-6.0.1.src/build && \
-    CXX=clang++-6.0 CC=clang-6.0 cmake -G Ninja ../ \
+    wget http://releases.llvm.org/7.0.1/llvm-7.0.1.src.tar.xz && \
+    tar -xf llvm-7.0.1.src.tar.xz && \
+    mkdir /tmp/llvm-7.0.1.src/build && \
+    cd /tmp/llvm-7.0.1.src/build && \
+    CXX=clang++-7.0 CC=clang-7.0 cmake -G Ninja ../ \
         -DLLVM_BINUTILS_INCDIR=/usr/include \
         -DLLVM_TARGETS_TO_BUILD=X86 \
         -DCMAKE_BUILD_TYPE=MinSizeRel \
